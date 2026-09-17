@@ -1,0 +1,17 @@
+export enum Service {
+  Social = 20,
+  Tesoura = 25,
+  Barboterapia = 20,
+  Pezinho = 5,
+  CorteBarba = 35,
+  Sonbrancelha = 8,
+  AlinhamentoCapilar = 25,
+  Selagem = 60,
+  SelagemCorte = 85,
+  Luzes = 60,
+  LuzesCorte = 85,
+  Nevou = 70,
+  NevouCorte = 95,
+  Reflexo = 60,
+  ReflexoCorte = 85,
+}
