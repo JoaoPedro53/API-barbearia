@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Appointment } from './models';
-import { AppointmentPostRequest } from './dtos';
+import { PostAppointmentDto } from './dtos';
+import { PatchAppointmentDto } from './dtos';
 
 @Injectable()
 export class AppointmentsService {
@@ -26,37 +27,33 @@ export class AppointmentsService {
     this.throwNotFoundException();
   }
 
-  create(appointmentDTO: AppointmentPostRequest): AppointmentPostRequest {
+  create(postAppointmentDTO: PostAppointmentDto): Appointment {
     const id = this.lastId++;
     const idBarberShop = this.lastIdBarberShop++;
 
-    const appointmentForPush = new Appointment(
+    const appointment = new Appointment(
       id,
       idBarberShop,
-      appointmentDTO.clientName,
-      appointmentDTO.numberPhone,
-      appointmentDTO.barber,
-      appointmentDTO.service,
-      new Date(appointmentDTO.date),
-      appointmentDTO.hora,
+      postAppointmentDTO.clientName,
+      postAppointmentDTO.numberPhone,
+      postAppointmentDTO.barber,
+      postAppointmentDTO.service,
+      new Date(postAppointmentDTO.date),
+      postAppointmentDTO.hora,
     );
 
-    this.appointments.push(appointmentForPush);
-    return appointmentDTO;
+    this.appointments.push(appointment);
+    return appointment;
   }
 
-  update(id: string, body: any) {
+  update(id: string, patchAppointmentDto: PatchAppointmentDto) {
     const appointmentIndex = this.appointments.findIndex(
       appointment => appointment.getId() === +id,
     );
 
     if (appointmentIndex < 0) this.throwNotFoundException();
 
-    const apoimentExist = this.appointments[appointmentIndex];
-    this.appointments[appointmentIndex] = {
-      ...apoimentExist,
-      ...body,
-    };
+    Object.assign(this.appointments[appointmentIndex], patchAppointmentDto); // solução temporaria, por f/ de get e setes nos dtos
 
     return this.appointments[appointmentIndex];
   }

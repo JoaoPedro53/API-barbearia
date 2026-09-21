@@ -8,7 +8,9 @@ import {
   Post,
 } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
-import { AppointmentPostRequest } from './dtos';
+import { PostAppointmentDto } from './dtos';
+import { PatchAppointmentDto } from './dtos';
+import { Appointment } from './models';
 
 @Controller('v1/appointments')
 export class AppointmentsController {
@@ -25,15 +27,16 @@ export class AppointmentsController {
   }
 
   @Post()
-  create(
-    @Body() appointmentPostRequest: AppointmentPostRequest,
-  ): AppointmentPostRequest {
-    return this.appointmentsService.create(appointmentPostRequest);
+  create(@Body() postAppointment: PostAppointmentDto): Appointment {
+    return this.appointmentsService.create(postAppointment);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body: any) {
-    return this.appointmentsService.update(id, body);
+  update(
+    @Param('id') id: string,
+    @Body() patchApointmentDto: PatchAppointmentDto,
+  ): any {
+    return this.appointmentsService.update(id, patchApointmentDto);
   }
 
   @Delete(':id')
