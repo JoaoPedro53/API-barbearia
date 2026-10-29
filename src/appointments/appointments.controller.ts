@@ -8,8 +8,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
-import { PostAppointmentDto } from './dtos';
-import { PatchAppointmentDto } from './dtos';
+import { PostAppointmentDto } from './dtos/post-appointment.dto';
+import { PatchAppointmentDto } from './dtos/patch-appointment.dto';
 import { Appointment } from './models';
 
 @Controller('v1/appointments')
