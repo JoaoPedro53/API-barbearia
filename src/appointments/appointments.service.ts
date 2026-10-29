@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Appointment } from './models';
-import { PostAppointmentDto } from './dtos';
-import { PatchAppointmentDto } from './dtos';
+import { PostAppointmentDto } from './dtos/post-appointment.dto';
+import { PatchAppointmentDto } from './dtos/patch-appointment.dto';
 
 @Injectable()
 export class AppointmentsService {
