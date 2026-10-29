@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -17,12 +18,12 @@ export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}
 
   @Get()
-  findAll(): any {
+  findAll() {
     return this.appointmentsService.findAll();
   }
 
   @Get(':id')
-  findById(@Param('id') id: string): any {
+  findById(@Param('id', ParseIntPipe) id: number) {
     return this.appointmentsService.findById(id);
   }
 
@@ -35,12 +36,12 @@ export class AppointmentsController {
   update(
     @Param('id') id: string,
     @Body() patchApointmentDto: PatchAppointmentDto,
-  ): any {
+  ) {
     return this.appointmentsService.update(id, patchApointmentDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): any {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.appointmentsService.delete(id);
   }
 }

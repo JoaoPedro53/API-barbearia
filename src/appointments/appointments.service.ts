@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Appointment } from './models';
+import { Appointment, Barber, Service } from './models';
 import { PostAppointmentDto } from './dtos/post-appointment.dto';
 import { PatchAppointmentDto } from './dtos/patch-appointment.dto';
 
@@ -18,9 +18,9 @@ export class AppointmentsService {
     return this.appointments;
   }
 
-  findById(id: string): Appointment {
+  findById(id: number): Appointment {
     const appointment = this.appointments.find(
-      appointment => appointment.getId() === +id,
+      appointment => appointment.getId() === id,
     );
 
     if (appointment) return appointment;
@@ -31,13 +31,27 @@ export class AppointmentsService {
     const id = this.lastId++;
     const idBarberShop = this.lastIdBarberShop++;
 
+    const barber = new Barber(
+      postAppointmentDTO.barberId,
+      `Barbeiro Nº ${postAppointmentDTO.barberId}`,
+      '82999999999',
+      '000.000.000-00',
+    );
+
+    const service = new Service(
+      postAppointmentDTO.serviceId,
+      `Serviço Nº ${postAppointmentDTO.serviceId}`,
+      50.0,
+      true,
+    );
+
     const appointment = new Appointment(
       id,
       idBarberShop,
       postAppointmentDTO.clientName,
       postAppointmentDTO.numberPhone,
-      postAppointmentDTO.barber,
-      postAppointmentDTO.service,
+      barber,
+      service,
       new Date(postAppointmentDTO.date),
       postAppointmentDTO.hora,
     );
@@ -58,9 +72,9 @@ export class AppointmentsService {
     return this.appointments[appointmentIndex];
   }
 
-  delete(id: string) {
+  delete(id: number) {
     const appointmentIndex = this.appointments.findIndex(
-      appointment => appointment.getId() === +id,
+      appointment => appointment.getId() === id,
     );
 
     if (appointmentIndex < 0) this.throwNotFoundException();

@@ -5,7 +5,7 @@ export class Appointment {
     private id: number,
     private idBarberShop: number,
     private clientName: string,
-    private numberPhone: string,
+    private clientNumberPhone: string,
     private barber: Barber,
     private service: Service,
     private date: Date,
@@ -37,11 +37,11 @@ export class Appointment {
   }
 
   getNumberPhone(): string {
-    return this.numberPhone;
+    return this.clientNumberPhone;
   }
 
   setNumberPhone(numberPhone: string): void {
-    this.numberPhone = numberPhone;
+    this.clientNumberPhone = numberPhone;
   }
 
   getBarber(): Barber {
