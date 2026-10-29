@@ -1,6 +1,4 @@
-import { IsDateString, IsMilitaryTime, Length } from 'class-validator';
-import { Barber } from '../models/Barber';
-import { Service } from '../models/enums/Service';
+import { IsDateString, IsInt, IsMilitaryTime, Length } from 'class-validator';
 import { IsStringAndIsNotEmpty } from '../decorators/string-validation-decorator';
 
 export class PostAppointmentDto {
@@ -11,8 +9,11 @@ export class PostAppointmentDto {
   @Length(11, 11)
   readonly numberPhone: string;
 
-  readonly barber: Barber;
-  readonly service: Service;
+  @IsInt()
+  readonly barberId: number;
+
+  @IsInt()
+  readonly serviceId: number;
 
   @IsDateString()
   readonly date: string;
