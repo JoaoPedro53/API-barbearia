@@ -1,16 +1,60 @@
-import { Barber, Service } from './index.js';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Barber, BarberShopUser, Service } from './index.js';
 
+@Entity()
 export class Appointment {
+  @PrimaryGeneratedColumn()
+  private id: number;
+
+  @ManyToOne(() => BarberShopUser)
+  @JoinColumn({ name: 'barberShop_id' })
+  private BarberShop: BarberShopUser;
+
+  @Column({ type: 'varchar' })
+  private clientName: string;
+
+  @Column({ type: 'varchar', length: '11' })
+  private clientNumberPhone: string;
+
+  @ManyToOne(() => Barber)
+  @JoinColumn({ name: 'barber_id' })
+  private barber: Barber;
+
+  @ManyToOne(() => Service)
+  @JoinColumn({ name: 'service_id' })
+  private service: Service;
+
+  @Column({ type: 'date' })
+  private date: Date;
+
+  @Column({ type: 'varchar' })
+  private hora: string;
+
   constructor(
-    private id: number,
-    private idBarberShop: number,
-    private clientName: string,
-    private clientNumberPhone: string,
-    private barber: Barber,
-    private service: Service,
-    private date: Date,
-    private hora: string,
-  ) {}
+    id: number,
+    BarberShop: BarberShopUser,
+    clientName: string,
+    clientNumberPhone: string,
+    barber: Barber,
+    service: Service,
+    date: Date,
+    hora: string,
+  ) {
+    this.id = id;
+    this.BarberShop = BarberShop;
+    this.clientName = clientName;
+    this.clientNumberPhone = clientNumberPhone;
+    this.barber = barber;
+    this.service = service;
+    this.date = date;
+    this.hora = hora;
+  }
 
   getId(): number {
     return this.id;
@@ -20,12 +64,12 @@ export class Appointment {
     this.id = id;
   }
 
-  getIdBarberShop(): number {
-    return this.idBarberShop;
+  getIdBarberShop(): BarberShopUser {
+    return this.BarberShop;
   }
 
-  setIdBarberShop(idBarberShop: number): void {
-    this.idBarberShop = idBarberShop;
+  setIdBarberShop(barberShop: BarberShopUser): void {
+    this.BarberShop = barberShop;
   }
 
   getClientName(): string {
