@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Appointment, Barber, Service } from './models';
+import { Appointment, Barber, BarberShopUser, Service } from './models';
 import { PostAppointmentDto } from './dtos/post-appointment.dto';
 import { PatchAppointmentDto } from './dtos/patch-appointment.dto';
 
@@ -29,25 +29,14 @@ export class AppointmentsService {
 
   create(postAppointmentDTO: PostAppointmentDto): Appointment {
     const id = this.lastId++;
-    const idBarberShop = this.lastIdBarberShop++;
 
-    const barber = new Barber(
-      postAppointmentDTO.barberId,
-      `Barbeiro Nº ${postAppointmentDTO.barberId}`,
-      '82999999999',
-      '000.000.000-00',
-    );
-
-    const service = new Service(
-      postAppointmentDTO.serviceId,
-      `Serviço Nº ${postAppointmentDTO.serviceId}`,
-      50.0,
-      true,
-    );
+    const barberShop = new BarberShopUser('Jk', '123');
+    const barber = new Barber('João', '82999999999', '11111111111');
+    const service = new Service('Social', 30, true);
 
     const appointment = new Appointment(
       id,
-      idBarberShop,
+      barberShop,
       postAppointmentDTO.clientName,
       postAppointmentDTO.numberPhone,
       barber,
